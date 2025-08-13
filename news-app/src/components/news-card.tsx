@@ -1,12 +1,12 @@
-export default function NewsCard() {
+export default function NewsCard({item}: {item: News}) {
     return (
           <div className="h-auto p-4 rounded-lg border border-zinc-300 dark:border-zinc-600 flex flex-col justify-between">
           <div>
-            <img src="https://placehold.co/600x400"
-            alt="article image"
+            <img src={item.poster}
+            alt={item.title}
             className="w-full h-48 object-cover rounded-md"/>
-            <h2 className="text-2xl font-semibold mt-3">Article Title</h2>
-            <p className="text-sm text-gray-500">Article Subtitle</p>
+            <h2 className="text-2xl font-semibold mt-3">{item.title}</h2>
+            <p className="text-sm text-gray-500">{item.description}</p>
           </div>
           <div>
             <a href="/detail/1">
