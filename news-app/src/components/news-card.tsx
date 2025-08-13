@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function NewsCard({item}: {item: News}) {
     return (
           <div className="h-auto p-4 rounded-lg border border-zinc-300 dark:border-zinc-600 flex flex-col justify-between">
@@ -9,9 +11,9 @@ export default function NewsCard({item}: {item: News}) {
             <p className="text-sm text-gray-500">{item.description}</p>
           </div>
           <div>
-            <a href="/detail/1">
+            <Link href={`/detail/${item.id}`}>
             <button className="bg-black dark:bg-white dark:text-black text-white px-4 py-2 rounded-md mt-3">Read More</button>
-            </a>
+            </Link>
           </div>
         </div>
     )
