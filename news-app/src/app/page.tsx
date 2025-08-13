@@ -1,9 +1,10 @@
 import NewsContainer from "@/components/news-container";
+import Search from "@/components/serach";
 // import { News } from "@/types/type"; -- jika menggunakan type.ts
 
 const fetchNews = async () => {
   const res = await fetch(
-    "https://api.nytimes.com/svc/topstories/v2/arts.json?api-key=S1n7RArUbF9iGy5eWptSvg0TbQp3r8uO",
+    "https://api.nytimes.com/svc/topstories/v2/us.json?api-key=S1n7RArUbF9iGy5eWptSvg0TbQp3r8uO",
     {
       cache: "force-cache",
     }
@@ -18,6 +19,7 @@ export default async function Home() {
   return (
     <div className="container mx-auto py-5">
       <h1 className="text-4xl font-semibold text-center">Daily New</h1>
+      <Search />
       <NewsContainer news={news} />
     </div>
   );

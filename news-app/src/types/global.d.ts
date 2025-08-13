@@ -18,8 +18,9 @@ interface Multimedia {
 interface Article {
   section: string;
   title: string;
-  abstarct: string;
+  abstract: string;
   url: string;
   byline: string;
   multimedia: Multimedia[];
+  // multimedia?: Multimedia[] | null;
 }

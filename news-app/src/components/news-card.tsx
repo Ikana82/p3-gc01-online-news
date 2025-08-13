@@ -5,12 +5,12 @@ export default function NewsCard({ item }: { item: Article }) {
     <div className="h-auto p-4 rounded-lg border border-zinc-300 dark:border-zinc-600 flex flex-col justify-between">
       <div>
         <img
-          src={item.multimedia[0].url}
+          src={item.multimedia?.[0]?.url}
           alt={item.title}
           className="w-full h-48 object-cover rounded-md"
         />
         <h2 className="text-2xl font-semibold mt-3">{item.title}</h2>
-        <p className="text-sm text-gray-500">{item.abstarct}</p>
+        <p className="text-sm text-gray-500">{item.abstract}</p>
       </div>
       <div>
         <Link href={`/detail/`}>
