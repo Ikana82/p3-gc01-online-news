@@ -8,3 +8,5 @@ interface News {
   author: string;
   category: string;
 }
+
+type NewsForm = Pick<News, 'title' | 'description' | 'poster'>;
