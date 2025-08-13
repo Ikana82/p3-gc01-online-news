@@ -10,3 +10,16 @@ interface News {
 }
 
 type NewsForm = Pick<News, 'title' | 'description' | 'poster'>;
+
+interface Multimedia {
+  url: string;
+}
+
+interface Article {
+  section: string;
+  title: string;
+  abstarct: string;
+  url: string;
+  byline: string;
+  multimedia: Multimedia[];
+}
