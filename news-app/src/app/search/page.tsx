@@ -41,7 +41,7 @@ export default function SearchPage() {
     <section className="container mx-auto px-4 py-8">
       <h1 className="text-xl font-normal mb-4">Search results for: {search}</h1>
 
-      {loading && <p>Loading...</p>}
+      {loading && <Spinner />}
 
       {!loading && articles.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -53,5 +53,13 @@ export default function SearchPage() {
 
       {!loading && articles.length === 0 && search && <p>No articles found.</p>}
     </section>
+  );
+}
+
+export function Spinner() {
+  return (
+    <div className="min-h-screen flex justify-center items-center py-10">
+      <div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+    </div>
   );
 }
