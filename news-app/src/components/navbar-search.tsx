@@ -1,28 +1,16 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function SearchNews() {
-  const [search, setSearch] = useState<string>("");
+export default function NavbarSearch() {
+  const [search, setSearch] = useState("");
+  const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    try {
-      const res = await fetch(
-        `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${search}&api-key=S1n7RArUbF9iGy5eWptSvg0TbQp3r8uO`,
-        {
-          cache: "force-cache",
-        }
-      );
-
-      if (!res.ok) throw new Error("Failed to fetch articles");
-
-      const article = await res.json();
-      console.log(article.response.docs);
-    } catch (error) {
-      console.error(error);
-    }
+    if (!search.trim()) return;
+    router.push(`/search?q=${encodeURIComponent(search)}`);
   };
 
   return (
@@ -39,7 +27,6 @@ export default function SearchNews() {
             onChange={(e) => setSearch(e.target.value)}
             className="bg-transparent text-neutral-400 text-base font-normal outline-none w-full placeholder:text-neutral-400"
           />
-
           <button
             type="submit"
             className="text-white px-2 py-1 rounded-lg hover:bg-zinc-600"

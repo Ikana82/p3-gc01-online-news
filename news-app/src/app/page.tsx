@@ -19,7 +19,6 @@ export default async function Home() {
   return (
     <div className="container mx-auto py-5">
       <h1 className="text-4xl font-semibold text-center">Daily New</h1>
-      {/* <Search /> */}
       <NewsContainer news={news} />
     </div>
   );

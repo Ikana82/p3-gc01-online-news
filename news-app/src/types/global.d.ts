@@ -9,7 +9,7 @@ interface News {
   category: string;
 }
 
-type NewsForm = Pick<News, 'title' | 'description' | 'poster'>;
+type NewsForm = Pick<News, "title" | "description" | "poster">;
 
 interface Multimedia {
   url: string;
@@ -54,3 +54,42 @@ interface News {
   multimedia: Multimedianews[];
 }
 
+interface Keyword {
+  name: string;
+  value: string;
+  rank: number;
+}
+
+interface Multimediasearch {
+  url: string;
+  height: number;
+  width: number;
+}
+
+interface Multimediatimes {
+  caption?: string;
+  credit?: string;
+  default?: Multimediasearch;
+  thumbnail?: Multimediasearch;
+}
+
+interface BylineSearch {
+  original: string;
+}
+
+interface ArticleSearch {
+  abstract: string;
+  byline: BylineSearch;
+  document_type: string;
+  headline: Headlinesearch;
+  _id: string;
+  keywords: Keyword[];
+  multimedia: Multimediatimes;
+  web_url: string;
+}
+
+interface Responsesearch {
+  response: {
+    docs: ArticleSearch[];
+  };
+}

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import SearchNews from "./searchnews";
+import NavbarSearch from "./navbar-search";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -22,7 +22,7 @@ export default function Navbar() {
             />
           </Link>
           <div className="w-auto">
-            <SearchNews />
+            <NavbarSearch />
           </div>
         </div>
 

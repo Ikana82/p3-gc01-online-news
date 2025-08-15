@@ -17,9 +17,9 @@ export default function CardNews({ news }: { news: News }) {
         style={{ backgroundImage: `url(${getCardImageUrl(news)})` }}
       />
       <div className="py-4 flex flex-col gap-2">
-        <p className="text-sm">{news.byline}</p>
+        <p className="text-sm text-gray-500">{news.byline}</p>
         <h2 className="text-xl font-bold">{news.title}</h2>
-        <p className="text-base line-clamp-3">{news.abstract}</p>
+        <p className="text-sm text-gray-500">{news.abstract}</p>
       </div>
     </a>
   );
