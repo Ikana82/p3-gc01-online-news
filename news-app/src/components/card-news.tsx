@@ -1,0 +1,25 @@
+const getCardImageUrl = (news: News) => {
+  const media = news.multimedia;
+  if (!media || media.length === 0) return "/placeholder-image.jpg";
+  const medium = media.find((m) => m.format === "mediumThreeByTwo210");
+  return medium ? medium.url : media[0].url;
+};
+
+export default function CardNews({ news }: { news: News }) {
+  return (
+    <a
+      href={news.url}
+      className="overflow-hidden shadow-lg hover:shadow-2xl w-full"
+    >
+      <div
+        className="h-60 rounded-lg bg-gray-300 bg-cover bg-center"
+        style={{ backgroundImage: `url(${getCardImageUrl(news)})` }}
+      />
+      <div className="py-4 flex flex-col gap-2">
+        <p className="text-sm">{news.byline}</p>
+        <h2 className="text-xl font-bold">{news.title}</h2>
+        <p className="text-base line-clamp-3">{news.abstract}</p>
+      </div>
+    </a>
+  );
+}

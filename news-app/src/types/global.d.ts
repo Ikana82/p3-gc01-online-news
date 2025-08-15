@@ -13,6 +13,9 @@ type NewsForm = Pick<News, 'title' | 'description' | 'poster'>;
 
 interface Multimedia {
   url: string;
+  format: string;
+  height: number;
+  width: number;
 }
 
 interface Article {
@@ -22,5 +25,32 @@ interface Article {
   url: string;
   byline: string;
   multimedia: Multimedia[];
-  // multimedia?: Multimedia[] | null;
 }
+
+interface Category {
+  section: string;
+  subsection: string;
+  title: string;
+  abstract: string;
+  updated_date: string;
+  published_date: string;
+  multimedia: Multimedia[];
+  url: string;
+  byline: string;
+}
+
+interface Multimedianews {
+  url: string;
+  format: string;
+  height: number;
+  width: number;
+}
+
+interface News {
+  title: string;
+  abstract: string;
+  byline: string;
+  url: string;
+  multimedia: Multimedianews[];
+}
+

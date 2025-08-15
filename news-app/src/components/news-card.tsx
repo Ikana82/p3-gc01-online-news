@@ -13,7 +13,7 @@ export default function NewsCard({ item }: { item: Article }) {
         <p className="text-sm text-gray-500">{item.abstract}</p>
       </div>
       <div>
-        <Link href={`/detail/`}>
+        <Link href="">
           <button className="bg-black dark:bg-white dark:text-black text-white px-4 py-2 rounded-md mt-3">
             Read More
           </button>
