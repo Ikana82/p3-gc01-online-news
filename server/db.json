@@ -49,6 +49,13 @@
       "originalUrl": "https://inspira-ui.com/",
       "author": "Bob Vasic",
       "category": "UI"
+    },
+    {
+      "id": "176a",
+      "title": "Sample",
+      "description": "sample",
+      "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1qQJjKRmJYHkLw-a7mTIETIIdvlLIkQuiIVgbgRcil1-E8WytmUprBwclqlaSLTT2ynQx_Q&s",
+      "createdAt": "2025-08-15T20:45:40.987Z"
     }
   ]
 }
