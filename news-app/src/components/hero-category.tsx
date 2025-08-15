@@ -1,11 +1,11 @@
-const getHeroImageUrl = (news: News) => {
+const getHeroImageUrl = (news: Category) => {
   const media = news.multimedia;
   if (!media || media.length === 0) return "/placeholder-image.jpg";
   const superJumbo = media.find((m) => m.format === "superJumbo");
   return superJumbo ? superJumbo.url : media[0].url;
 };
 
-export default function HeroNews({ news }: { news: News }) {
+export default function HeroCategoryNews({ news }: { news: Category }) {
   return (
     <div className="w-full h-[500px] relative rounded-lg overflow-hidden">
       <div

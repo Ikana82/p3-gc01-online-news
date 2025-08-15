@@ -1,73 +1,125 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import SearchNews from "./searchnews";
 
 export default function Navbar() {
+  const pathname = usePathname();
+
   return (
-    <nav>
-      <nav className="bg-black md:bg-white dark:bg-zinc-950 shadow-sm">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            {/* Left */}
-            <div className="flex justify-center md:justify-start">
-              <Link href="/" className="flex items-center gap-3">
-                <Image
-                  src="/images/logo-trenday.png"
-                  alt="Trenday Logo"
-                  width={170}
-                  height={90}
-                />
-              </Link>
-            </div>
-
-            {/* Right */}
-            <div className="flex flex-col w-full md:w-auto gap-2">
-              <div className="w-full md:w-auto">
-                <SearchNews />
-              </div>
-
-              <div className="flex flex-wrap justify-center md:justify-end gap-4">
-                <Link
-                  href="/news"
-                  className="px-3 py-2 rounded-md font-bold hover:bg-gray-100 dark:hover:bg-zinc-900"
-                >
-                  News
-                </Link>
-                <Link
-                  href="/category/world"
-                  className="px-3 py-2 rounded-md font-bold hover:bg-gray-100 dark:hover:bg-zinc-900"
-                >
-                  World
-                </Link>
-                <Link
-                  href="/category/food"
-                  className="px-3 py-2 rounded-md font-bold hover:bg-gray-100 dark:hover:bg-zinc-900"
-                >
-                  Food
-                </Link>
-                <Link
-                  href="/category/home"
-                  className="px-3 py-2 rounded-md font-bold hover:bg-gray-100 dark:hover:bg-zinc-900"
-                >
-                  Lifestyle
-                </Link>
-                <Link
-                  href="/politic"
-                  className="px-3 py-2 rounded-md font-bold hover:bg-gray-100 dark:hover:bg-zinc-900"
-                >
-                  Politic
-                </Link>
-                <Link
-                  href="/health"
-                  className="px-3 py-2 rounded-md font-bold hover:bg-gray-100 dark:hover:bg-zinc-900"
-                >
-                  Health
-                </Link>
-              </div>
-            </div>
+    <nav className="bg-black md:bg-white dark:bg-zinc-950 shadow-sm">
+      <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
+        {/* Top 1 */}
+        <div className="flex flex-row items-center justify-between w-full gap-4">
+          <Link href="/" className="flex items-center gap-3">
+            <Image
+              src="/images/logo-trenday.png"
+              alt="Trenday Logo"
+              width={170}
+              height={90}
+            />
+          </Link>
+          <div className="w-auto">
+            <SearchNews />
           </div>
         </div>
-      </nav>
+
+        {/* Top Menu */}
+        <div className="w-full flex justify-between flex-wrap md:gap-2 py-2">
+          <Link
+            href="/politic"
+            className={`px-3 py-2 font-bold hover:bg-gray-100 dark:hover:bg-zinc-900 rounded-md ${
+              pathname === "/politic"
+                ? "border-b-2 border-white rounded-b-none"
+                : ""
+            }`}
+          >
+            Politic
+          </Link>
+          <Link
+            href="/news/health"
+            className={`px-3 py-2 font-bold hover:bg-gray-100 dark:hover:bg-zinc-900 rounded-md ${
+              pathname === "/news/health"
+                ? "border-b-2 border-white rounded-b-none"
+                : ""
+            }`}
+          >
+            Health
+          </Link>
+          <Link
+            href="/news/business"
+            className={`px-3 py-2 font-bold hover:bg-gray-100 dark:hover:bg-zinc-900 rounded-md ${
+              pathname === "/news/business"
+                ? "border-b-2 border-white rounded-b-none"
+                : ""
+            }`}
+          >
+            Business
+          </Link>
+          <Link
+            href="/news/technology"
+            className={`px-3 py-2 font-bold hover:bg-gray-100 dark:hover:bg-zinc-900 rounded-md ${
+              pathname === "/news/technology"
+                ? "border-b-2 border-white rounded-b-none"
+                : ""
+            }`}
+          >
+            Technology
+          </Link>
+          <Link
+            href="/news/fashion"
+            className={`px-3 py-2 font-bold hover:bg-gray-100 dark:hover:bg-zinc-900 rounded-md ${
+              pathname === "/news/fashion"
+                ? "border-b-2 border-white rounded-b-none"
+                : ""
+            }`}
+          >
+            Fashion
+          </Link>
+          <Link
+            href="/category/world"
+            className={`px-3 py-2 font-bold hover:bg-gray-100 dark:hover:bg-zinc-900 rounded-md ${
+              pathname === "/category/world"
+                ? "border-b-2 border-white rounded-b-none"
+                : ""
+            }`}
+          >
+            World
+          </Link>
+          <Link
+            href="/category/food"
+            className={`px-3 py-2 font-bold hover:bg-gray-100 dark:hover:bg-zinc-900 rounded-md ${
+              pathname === "/category/food"
+                ? "border-b-2 border-white rounded-b-none"
+                : ""
+            }`}
+          >
+            Food
+          </Link>
+          <Link
+            href="/category/science"
+            className={`px-3 py-2 font-bold hover:bg-gray-100 dark:hover:bg-zinc-900 rounded-md ${
+              pathname === "/category/science"
+                ? "border-b-2 border-white rounded-b-none"
+                : ""
+            }`}
+          >
+            Science
+          </Link>
+          <Link
+            href="/category/arts"
+            className={`px-3 py-2 font-bold hover:bg-gray-100 dark:hover:bg-zinc-900 rounded-md ${
+              pathname === "/category/arts"
+                ? "border-b-2 border-white rounded-b-none"
+                : ""
+            }`}
+          >
+            Lifestyle
+          </Link>
+        </div>
+      </div>
 
       {/* <div className="container flex gap-2 mx-auto justify-between py-4">
                 <h1 className="text-2xl font-bold">News</h1>

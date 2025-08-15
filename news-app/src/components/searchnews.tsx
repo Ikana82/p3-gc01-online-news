@@ -42,7 +42,7 @@ export default function SearchNews() {
 
           <button
             type="submit"
-            className="text-white px-4 py-1 rounded-lg hover:bg-zinc-600"
+            className="text-white px-2 py-1 rounded-lg hover:bg-zinc-600"
           >
             Search
           </button>

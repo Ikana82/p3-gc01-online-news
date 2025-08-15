@@ -1,11 +1,11 @@
-const getCardImageUrl = (news: News) => {
+const getCardImageUrl = (news: Category) => {
   const media = news.multimedia;
   if (!media || media.length === 0) return "/placeholder-image.jpg";
   const medium = media.find((m) => m.format === "mediumThreeByTwo210");
   return medium ? medium.url : media[0].url;
 };
 
-export default function CardNews({ news }: { news: News }) {
+export default function CardCategoryNews({ news }: { news: Category }) {
   return (
     <a
       href={news.url}

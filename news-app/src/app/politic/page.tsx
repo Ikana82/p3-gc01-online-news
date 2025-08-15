@@ -22,7 +22,6 @@ export default async function NewsPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-semibold text-center mb-8">Politic News</h1>
       <NewsContent news={news} />
     </div>
   );
