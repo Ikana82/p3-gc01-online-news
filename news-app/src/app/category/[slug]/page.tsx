@@ -1,4 +1,4 @@
-import Image from "next/image";
+import NewsContent from "@/components/news-content";
 import { Metadata } from "next";
 
 interface Props {
@@ -31,7 +31,9 @@ const fetchCategoryNews = async (slug: string): Promise<Article[]> => {
     }
   );
 
-  if (!res.ok) throw new Error(`Failed to fetch news: ${slug}`);
+  if (!res.ok) {
+    throw new Error(`Failed to fetch news for slug: ${slug}`);
+  }
 
   const data = await res.json();
   return data.results ?? [];
@@ -40,74 +42,25 @@ const fetchCategoryNews = async (slug: string): Promise<Article[]> => {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const articles = await fetchCategoryNews(slug);
-  const first = articles[0];
+  const post = articles[0];
 
   return {
-    title: first?.title ?? "News",
-    description: first?.abstract ?? "Latest news",
+    title: post?.title ?? "News",
+    description: post?.abstract ?? "Latest news",
     openGraph: {
-      title: first?.title ?? "News",
-      description: first?.abstract ?? "Latest news",
+      title: post?.title ?? "News",
+      description: post?.abstract ?? "Latest news",
     },
   };
-}
-
-interface NewsContentProps {
-  news: Article[];
-}
-
-function NewsContentWithImage({ news }: NewsContentProps) {
-  return (
-    <div className="space-y-6">
-      {news.map((article, idx) => {
-        const image =
-          article.multimedia?.find((m) => m.format === "superJumbo") ||
-          article.multimedia?.[0];
-
-        return (
-          <div key={idx} className="border p-4 rounded shadow-sm">
-            <a
-              href={article.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-semibold text-lg hover:underline"
-            >
-              {article.title}
-            </a>
-            <p className="mt-2">{article.abstract}</p>
-            {image && (
-              <div className="mt-2 relative w-full h-64 sm:h-80 md:h-96">
-                <Image
-                  src={image.url}
-                  alt={article.title}
-                  fill
-                  className="object-cover rounded"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
-              </div>
-            )}
-          </div>
-        );
-      })}
-    </div>
-  );
 }
 
 export default async function NewsPage({ params }: Props) {
   const { slug } = await params;
   const news = await fetchCategoryNews(slug);
 
-  if (!news || news.length === 0) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <p>No news available</p>
-      </div>
-    );
-  }
-
   return (
     <div className="container mx-auto px-4 py-8">
-      <NewsContentWithImage news={news} />
+      <NewsContent news={news} />
     </div>
   );
 }
