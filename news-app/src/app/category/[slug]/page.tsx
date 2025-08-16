@@ -1,4 +1,5 @@
 import NewsContent from "@/components/news-content";
+import Image from "next/image";
 import { Metadata } from "next";
 
 interface Props {
@@ -25,8 +26,8 @@ export interface Article {
 
 const fetchCategoryNews = async (slug: string): Promise<Article[]> => {
   const res = await fetch(
-    `https://api.nytimes.com/svc/topstories/v2/${slug}.json?api-key=S1n7RArUbF9iGy5eWptSvg0TbQp3r8uO`,
-    { cache: "force-cache" }
+    `https://api.nytimes.com/svc/topstories/v2/${slug}.json?api-key=API_KEY`,
+    { next: { revalidate: 2 } } // ISR cache 2 detik
   );
 
   if (!res.ok) throw new Error(`Failed to fetch news: ${slug}`);
@@ -49,6 +50,47 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+interface NewsContentProps {
+  news: Article[];
+}
+
+function NewsContentWithImage({ news }: NewsContentProps) {
+  return (
+    <div className="space-y-6">
+      {news.map((article, idx) => {
+        const image =
+          article.multimedia?.find((m) => m.format === "superJumbo") ||
+          article.multimedia?.[0];
+
+        return (
+          <div key={idx} className="border p-4 rounded shadow-sm">
+            <a
+              href={article.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-lg hover:underline"
+            >
+              {article.title}
+            </a>
+            <p className="mt-2">{article.abstract}</p>
+            {image && (
+              <div className="mt-2 relative w-full h-64 sm:h-80 md:h-96">
+                <Image
+                  src={image.url}
+                  alt={article.title}
+                  fill
+                  className="object-cover rounded"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 export default async function NewsPage({ params }: Props) {
   const news = await fetchCategoryNews(params.slug);
 
@@ -62,7 +104,7 @@ export default async function NewsPage({ params }: Props) {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <NewsContent news={news} />
+      <NewsContentWithImage news={news} />
     </div>
   );
 }

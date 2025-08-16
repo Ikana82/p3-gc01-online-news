@@ -19,14 +19,14 @@ export default function Navbar() {
               alt="Trenday Logo"
               width={170}
               height={90}
-              className="dark:hidden"
+              className="dark:hidden w-auto h-auto"
             />
             <Image
               src="/images/logo-trenday.png"
               alt="Trenday Logo"
               width={170}
               height={90}
-              className="hidden dark:block"
+              className="hidden dark:block w-auto h-auto"
             />
           </Link>
           <div className="w-auto">
