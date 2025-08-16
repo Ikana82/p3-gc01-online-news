@@ -1,5 +1,10 @@
 import NewsContent from "@/components/news-content";
 import { Metadata } from "next";
+
+interface Props {
+  params: Promise<{ slug: string }>;
+}
+
 interface Multimedia {
   url: string;
   format: string;
@@ -8,7 +13,7 @@ interface Multimedia {
   caption: string;
 }
 
-interface Article {
+export interface Article {
   section: string;
   title: string;
   abstract: string;
@@ -18,14 +23,12 @@ interface Article {
   published_date: string;
 }
 
-// interface Props {
-//   params: { slug: string };
-// }
-
 const fetchCategoryNews = async (slug: string): Promise<Article[]> => {
   const res = await fetch(
     `https://api.nytimes.com/svc/topstories/v2/${slug}.json?api-key=S1n7RArUbF9iGy5eWptSvg0TbQp3r8uO`,
-    { next: { revalidate: 2 } } // Revalidate data setiap 2 detik saja
+    {
+      cache: "force-cache",
+    }
   );
 
   if (!res.ok) {
@@ -33,11 +36,11 @@ const fetchCategoryNews = async (slug: string): Promise<Article[]> => {
   }
 
   const data = await res.json();
-  return (data.results as Article[]) ?? [];
+  return data.results ?? [];
 };
 
-export async function generateMetadata({ params }: any) {
-  const { slug } = params;
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
   const articles = await fetchCategoryNews(slug);
   const post = articles[0];
 
@@ -51,8 +54,8 @@ export async function generateMetadata({ params }: any) {
   };
 }
 
-export default async function NewsPage({ params }: any) {
-  const { slug } = params;
+export default async function NewsPage({ params }: Props) {
+  const { slug } = await params;
   const news = await fetchCategoryNews(slug);
 
   return (
