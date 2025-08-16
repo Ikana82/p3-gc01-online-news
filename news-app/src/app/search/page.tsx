@@ -3,6 +3,7 @@
 import SearchCard from "@/components/search-card";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import Spinner from "../spinner";
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
@@ -53,13 +54,5 @@ export default function SearchPage() {
 
       {!loading && articles.length === 0 && search && <p>No articles found.</p>}
     </section>
-  );
-}
-
-export function Spinner() {
-  return (
-    <div className="min-h-screen flex justify-center items-center py-10">
-      <div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
-    </div>
   );
 }

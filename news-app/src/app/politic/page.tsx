@@ -22,7 +22,7 @@ export default async function NewsPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <NewsContent news={news} />
+      {/* <NewsContent news={news} /> */}
     </div>
   );
 }
