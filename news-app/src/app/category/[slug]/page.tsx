@@ -1,6 +1,6 @@
-import NewsContent from "@/components/news-content";
 import Image from "next/image";
 import { Metadata } from "next";
+
 interface Props {
   params: Promise<{ slug: string }>;
 }
@@ -25,8 +25,10 @@ export interface Article {
 
 const fetchCategoryNews = async (slug: string): Promise<Article[]> => {
   const res = await fetch(
-    `https://api.nytimes.com/svc/topstories/v2/${slug}.json?api-key=API_KEY`,
-    { next: { revalidate: 2 } } // ISR cache 2 detik
+    `https://api.nytimes.com/svc/topstories/v2/${slug}.json?api-key=S1n7RArUbF9iGy5eWptSvg0TbQp3r8uO`,
+    {
+      cache: "force-cache",
+    }
   );
 
   if (!res.ok) throw new Error(`Failed to fetch news: ${slug}`);
