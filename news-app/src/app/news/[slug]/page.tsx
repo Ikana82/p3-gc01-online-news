@@ -8,10 +8,12 @@ interface Props {
 const fetchCategoryNews = async (slug: string): Promise<News[]> => {
   const res = await fetch(
     `https://api.nytimes.com/svc/topstories/v2/${slug}.json?api-key=S1n7RArUbF9iGy5eWptSvg0TbQp3r8uO`,
-    { cache: "force-cache" }
+    { next: { revalidate: 1 } } // Revalidate data setiap 1 detik saja
   );
 
-  if (!res.ok) throw new Error(`Failed to fetch news: ${slug}`);
+  if (!res.ok) {
+    throw new Error(`Failed to fetch news for slug: ${slug}`);
+  }
 
   const data = await res.json();
   return data.results ?? [];
