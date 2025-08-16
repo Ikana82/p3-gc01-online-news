@@ -1,9 +1,8 @@
 import NewsContent from "@/components/news-content";
 import Image from "next/image";
 import { Metadata } from "next";
-
 interface Props {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 interface Multimedia {
@@ -37,7 +36,8 @@ const fetchCategoryNews = async (slug: string): Promise<Article[]> => {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const articles = await fetchCategoryNews(params.slug);
+  const { slug } = await params;
+  const articles = await fetchCategoryNews(slug);
   const first = articles[0];
 
   return {
@@ -92,7 +92,8 @@ function NewsContentWithImage({ news }: NewsContentProps) {
 }
 
 export default async function NewsPage({ params }: Props) {
-  const news = await fetchCategoryNews(params.slug);
+  const { slug } = await params;
+  const news = await fetchCategoryNews(slug);
 
   if (!news || news.length === 0) {
     return (
