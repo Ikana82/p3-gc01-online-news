@@ -15,10 +15,18 @@ export default function Navbar() {
         <div className="flex flex-row items-center justify-between w-full gap-4">
           <Link href="/" className="flex items-center gap-3">
             <Image
+              src="/images/logo-trenday-black.png"
+              alt="Trenday Logo"
+              width={170}
+              height={90}
+              className="dark:hidden"
+            />
+            <Image
               src="/images/logo-trenday.png"
               alt="Trenday Logo"
               width={170}
               height={90}
+              className="hidden dark:block"
             />
           </Link>
           <div className="w-auto">

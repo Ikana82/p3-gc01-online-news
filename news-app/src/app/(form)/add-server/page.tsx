@@ -10,13 +10,16 @@ export default function AddNews() {
       poster: formData.get("poster"),
     };
 
-    const res = await fetch("http://localhost:3001/news", {
-      method: "POST",
-      body: JSON.stringify(rawFormData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const res = await fetch(
+      "https://api.jsonbin.io/v3/b/689fbf5ad0ea881f405a4000",
+      {
+        method: "POST",
+        body: JSON.stringify(rawFormData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     if (!res.ok) {
       throw new Error("Failed to fetch news");
     }

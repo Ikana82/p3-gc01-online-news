@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import Swal from "sweetalert2";
 
@@ -13,53 +13,66 @@ interface NewsForm {
 
 export default function AddMoment() {
   const router = useRouter();
-
   const [formData, setFormData] = useState<NewsForm>({
     title: "",
     description: "",
     poster: "",
   });
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (
-      !formData.title.trim() ||
-      !formData.description.trim() ||
-      !formData.poster.trim()
-    ) {
+    if (!formData.title || !formData.description || !formData.poster) {
       toast.error("All fields are required!");
       return;
     }
 
-    const dataToSend = {
-      ...formData,
-      createdAt: new Date().toISOString(),
-    };
+    setLoading(true);
+    const dataToSend = { ...formData, createdAt: new Date().toISOString() };
 
     try {
-      const res = await fetch("http://localhost:3001/news", {
-        method: "POST",
-        body: JSON.stringify(dataToSend),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const resGet = await fetch(
+        "https://api.jsonbin.io/v3/b/689fbf5ad0ea881f405a4000",
+        {
+          headers: {
+            "X-Master-Key":
+              "$2a$10$TzpPkC1B8fuwMnhA4XnfduQFkNX9xP4acj5a619bct0KcSXiToU3C",
+          },
+        }
+      );
+      if (!resGet.ok) throw new Error("Failed to fetch current news");
+      const currentData = await resGet.json();
+      const updatedNews = [...(currentData.record.news || []), dataToSend];
 
-      if (!res.ok) {
-        throw new Error("Error submit data");
-      }
+      const resPut = await fetch(
+        "https://api.jsonbin.io/v3/b/689fbf5ad0ea881f405a4000",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Master-Key":
+              "$2a$10$TzpPkC1B8fuwMnhA4XnfduQFkNX9xP4acj5a619bct0KcSXiToU3C",
+          },
+          body: JSON.stringify({ news: updatedNews }),
+        }
+      );
+
+      if (!resPut.ok) throw new Error("Failed to share moment");
 
       toast.success("Moment shared successfully!");
-
       Swal.fire({
         icon: "success",
         title: "Success!",
         text: "Your moment has been shared.",
         confirmButtonColor: "#3085d6",
-      }).then(() => {
-        router.push("/about");
-      });
+      }).then(() => router.push("/about"));
     } catch (error) {
       console.error(error);
       toast.error("Failed to share moment.");
@@ -69,21 +82,10 @@ export default function AddMoment() {
         text: "Failed to share moment. Please try again.",
         confirmButtonColor: "#d33",
       });
+    } finally {
+      setLoading(false);
     }
   };
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -97,9 +99,6 @@ export default function AddMoment() {
             Tell us what you want to convey, and if needed, we will contact you
             for more detailed information. Everything you share has the chance
             to be featured on our news page.
-            <br />
-            <br />I can also create a few shorter, catchier versions in English
-            to make it more engaging for readers. Do you want me to do that?
           </div>
         </div>
 
@@ -152,9 +151,10 @@ export default function AddMoment() {
 
             <button
               type="submit"
+              disabled={loading}
               className="bg-black dark:bg-white dark:text-black text-white px-4 py-2 rounded-md mt-4"
             >
-              Share Moment
+              {loading ? "Sharing..." : "Share Moment"}
             </button>
           </form>
         </div>

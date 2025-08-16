@@ -17,7 +17,7 @@ export default function NavbarSearch() {
     <section>
       <form
         onSubmit={handleSubmit}
-        className="w-full h-10 p-6 bg-zinc-700 rounded-lg flex flex-col justify-center gap-3"
+        className="w-full h-10 p-6 border border-gray-500 dark:border-none dark:bg-zinc-800 rounded-lg flex flex-col justify-center gap-3"
       >
         <div className="flex justify-start items-center gap-5 w-full">
           <input
@@ -29,7 +29,7 @@ export default function NavbarSearch() {
           />
           <button
             type="submit"
-            className="text-white px-2 py-1 rounded-lg hover:bg-zinc-600"
+            className="text-gray-500 dark:text-white px-2 py-1 rounded-lg hover:bg-zinc-700 hover:text-white"
           >
             Search
           </button>
