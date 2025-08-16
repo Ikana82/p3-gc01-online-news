@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function NotFound() {
   return (
-    <div className="flex flex-col justify-center items-center text-center px-4 py-10">
+    <div className="min-h-screen flex flex-col justify-center items-center text-center px-4">
       <Image
         src="/images/not-founda.png"
         alt="Not Found"

@@ -2,10 +2,28 @@ import NewsContent from "@/components/news-content";
 import { Metadata } from "next";
 
 interface Props {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }
 
-const fetchCategoryNews = async (slug: string): Promise<News[]> => {
+interface Multimedia {
+  url: string;
+  format: string;
+  height: number;
+  width: number;
+  caption: string;
+}
+
+export interface Article {
+  section: string;
+  title: string;
+  abstract: string;
+  byline: string;
+  url: string;
+  multimedia: Multimedia[];
+  published_date: string;
+}
+
+const fetchCategoryNews = async (slug: string): Promise<Article[]> => {
   const res = await fetch(
     `https://api.nytimes.com/svc/topstories/v2/${slug}.json?api-key=S1n7RArUbF9iGy5eWptSvg0TbQp3r8uO`,
     { cache: "force-cache" }
@@ -18,24 +36,29 @@ const fetchCategoryNews = async (slug: string): Promise<News[]> => {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
-  const articles = await fetchCategoryNews(slug);
-
-  const post = articles[0];
+  const articles = await fetchCategoryNews(params.slug);
+  const first = articles[0];
 
   return {
-    title: post?.title ?? "News",
-    description: post?.abstract ?? "Latest news",
+    title: first?.title ?? "News",
+    description: first?.abstract ?? "Latest news",
     openGraph: {
-      title: post?.title ?? "News",
-      description: post?.abstract ?? "Latest news",
+      title: first?.title ?? "News",
+      description: first?.abstract ?? "Latest news",
     },
   };
 }
 
 export default async function NewsPage({ params }: Props) {
-  const { slug } = await params;
-  const news = await fetchCategoryNews(slug);
+  const news = await fetchCategoryNews(params.slug);
+
+  if (!news || news.length === 0) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <p>No news available</p>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">

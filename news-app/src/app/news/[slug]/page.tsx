@@ -1,14 +1,31 @@
 import NewsContent from "@/components/news-content";
 import { Metadata } from "next";
+interface Multimedia {
+  url: string;
+  format: string;
+  height: number;
+  width: number;
+  caption: string;
+}
+
+interface Article {
+  section: string;
+  title: string;
+  abstract: string;
+  byline: string;
+  url: string;
+  multimedia: Multimedia[];
+  published_date: string;
+}
 
 interface Props {
   params: { slug: string };
 }
 
-const fetchCategoryNews = async (slug: string): Promise<News[]> => {
+const fetchCategoryNews = async (slug: string): Promise<Article[]> => {
   const res = await fetch(
     `https://api.nytimes.com/svc/topstories/v2/${slug}.json?api-key=S1n7RArUbF9iGy5eWptSvg0TbQp3r8uO`,
-    { next: { revalidate: 1 } } // Revalidate data setiap 1 detik saja
+    { next: { revalidate: 2 } } // Revalidate data setiap 12 detik saja
   );
 
   if (!res.ok) {
@@ -16,13 +33,12 @@ const fetchCategoryNews = async (slug: string): Promise<News[]> => {
   }
 
   const data = await res.json();
-  return data.results ?? [];
+  return (data.results as Article[]) ?? [];
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = params;
   const articles = await fetchCategoryNews(slug);
-
   const post = articles[0];
 
   return {

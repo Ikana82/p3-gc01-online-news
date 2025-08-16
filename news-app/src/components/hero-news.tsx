@@ -1,11 +1,29 @@
-const getHeroImageUrl = (news: News) => {
+interface Multimedia {
+  url: string;
+  format: string;
+  height: number;
+  width: number;
+  caption: string;
+}
+
+interface Article {
+  section: string;
+  title: string;
+  abstract: string;
+  byline: string;
+  url: string;
+  multimedia: Multimedia[];
+  published_date: string;
+}
+
+const getHeroImageUrl = (news: Article) => {
   const media = news.multimedia;
   if (!media || media.length === 0) return "/placeholder-image.jpg";
   const superJumbo = media.find((m) => m.format === "superJumbo");
   return superJumbo ? superJumbo.url : media[0].url;
 };
 
-export default function HeroNews({ news }: { news: News }) {
+export default function HeroNews({ news }: { news: Article }) {
   return (
     <div className="w-full h-[500px] relative rounded-lg overflow-hidden">
       <div

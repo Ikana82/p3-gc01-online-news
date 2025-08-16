@@ -1,7 +1,24 @@
 import CardNews from "./card-news";
 import HeroNews from "./hero-news";
+interface Multimedia {
+  url: string;
+  format: string;
+  height: number;
+  width: number;
+  caption: string;
+}
 
-export default function NewsContent({ news }: { news: News[] }) {
+interface Article {
+  section: string;
+  title: string;
+  abstract: string;
+  byline: string;
+  url: string;
+  multimedia: Multimedia[];
+  published_date: string;
+}
+
+export default function NewsContent({ news }: { news: Article[] }) {
   if (!news || news.length === 0) return <p>No news available</p>;
 
   const heroNews = news[0];

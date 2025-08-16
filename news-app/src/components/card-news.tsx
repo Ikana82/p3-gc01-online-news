@@ -1,11 +1,29 @@
-const getCardImageUrl = (news: News) => {
+interface Multimedia {
+  url: string;
+  format: string;
+  height: number;
+  width: number;
+  caption: string;
+}
+
+interface Article {
+  section: string;
+  title: string;
+  abstract: string;
+  byline: string;
+  url: string;
+  multimedia: Multimedia[];
+  published_date: string;
+}
+
+const getCardImageUrl = (news: Article) => {
   const media = news.multimedia;
   if (!media || media.length === 0) return "/placeholder-image.jpg";
   const medium = media.find((m) => m.format === "mediumThreeByTwo210");
   return medium ? medium.url : media[0].url;
 };
 
-export default function CardNews({ news }: { news: News }) {
+export default function CardNews({ news }: { news: Article }) {
   return (
     <a
       href={news.url}
